@@ -34,6 +34,8 @@ namespace Jazani.Application.Admins.Services.Implementations
             user.RegistrationDate = DateTimeOffset.Now;
             user.State = true;
             user.LdapAuthentication = false;
+            user.NotificationCount = 0;
+            user.IsInspector = 0;
             user.Password = GetSHA1(user.Password);
 
 
