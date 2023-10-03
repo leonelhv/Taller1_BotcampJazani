@@ -16,6 +16,7 @@ namespace Jazani.Infrastructure.Cores.Contexts
             );
 
             services.AddTransient<IPeriocityRepository, PeriocityRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
 
             return services;
         }

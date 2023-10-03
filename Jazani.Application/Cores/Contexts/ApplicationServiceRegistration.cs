@@ -14,6 +14,7 @@ namespace Jazani.Application.Cores.Contexts
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient<IPeriocityService, PeriocityService>();
+            services.AddTransient<IUserService, UserService>();
             return services;
         }
     }

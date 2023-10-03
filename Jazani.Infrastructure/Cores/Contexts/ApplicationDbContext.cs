@@ -14,12 +14,14 @@ namespace Jazani.Infrastructure.Cores.Contexts
 
         #region "DbSet"
         public DbSet<Periocity> Periocities { get; set; }
+        public DbSet<User> Users { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new PeriocityConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
         }
 
     }
