@@ -1,3 +1,4 @@
+using Jazani.Application.Cores.Contexts;
 using Jazani.Infrastructure.Cores.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,9 @@ builder.Services.AddSwaggerGen();
 
 //Infrastructure
 builder.Services.AddInfrastructureServices(builder.Configuration);
+
+//Application
+builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 
