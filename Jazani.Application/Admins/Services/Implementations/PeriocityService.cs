@@ -32,7 +32,7 @@ namespace Jazani.Application.Admins.Services.Implementations
         public async Task<PeriocityDto> CreateAsync(PeriocitySaveDto periocitySaveDto)
         {
             Periocity office = _mapper.Map<Periocity>(periocitySaveDto);
-            office.RegistrationDate = DateTime.Now;
+            office.RegistrationDate = DateTimeOffset.Now;
             office.State = true;
 
             Periocity officeSaved = await _periocityRepository.SaveAsync(office);
