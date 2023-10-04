@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Jazani.Domain\Jazani.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Cores\Persistenses\" />
+  </ItemGroup>
+
 </Project>
