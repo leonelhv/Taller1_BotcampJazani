@@ -1,8 +1,4 @@
-﻿
-
-using Jazani.Application.Admins.Services;
-using Jazani.Application.Admins.Services.Implementations;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace Jazani.Application.Cores.Contexts
@@ -13,8 +9,6 @@ namespace Jazani.Application.Cores.Contexts
         {
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            services.AddTransient<IPeriocityService, PeriocityService>();
-            services.AddTransient<IUserService, UserService>();
             return services;
         }
     }

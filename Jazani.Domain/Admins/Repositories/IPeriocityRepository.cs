@@ -1,11 +1,9 @@
 ﻿using Jazani.Domain.Admins.Models;
+using Jazani.Domain.Cores.Repositories;
 
 namespace Jazani.Domain.Admins.Repositories
 {
-    public interface IPeriocityRepository
+    public interface IPeriocityRepository : ICrudRepository<Periocity, int>
     {
-        Task<IReadOnlyList<Periocity>> FindAllAsync();
-        Task<Periocity?> FindByIdAsync(int id);
-        Task<Periocity> SaveAsync(Periocity office);
     }
 }

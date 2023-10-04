@@ -2,8 +2,6 @@
 using Jazani.Application.Admins.Dtos.Users;
 using Jazani.Domain.Admins.Models;
 using Jazani.Domain.Admins.Repositories;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace Jazani.Application.Admins.Services.Implementations
 {
@@ -31,12 +29,12 @@ namespace Jazani.Application.Admins.Services.Implementations
         public async Task<UserDto> CreateAsync(UserSaveDto userSaveDto)
         {
             User user = _mapper.Map<User>(userSaveDto);
-            user.RegistrationDate = DateTimeOffset.Now;
+            user.RegistrationDate = DateTime.Now;
             user.State = true;
             user.LdapAuthentication = false;
             user.NotificationCount = 0;
             user.IsInspector = 0;
-            user.Password = GetSHA1(user.Password);
+            user.Password = PasswordHasher.HashPassword(user.Password);
 
 
             User userSaved = await _userRepository.SaveAsync(user);
@@ -52,7 +50,7 @@ namespace Jazani.Application.Admins.Services.Implementations
 
             _mapper.Map<UserSaveDto, User>(userSaveDto, user);
 
-            user.Password = GetSHA1(user.Password);
+            user.Password = PasswordHasher.HashPassword(user.Password);
 
             User userSaved = await _userRepository.SaveAsync(user);
 
@@ -69,18 +67,7 @@ namespace Jazani.Application.Admins.Services.Implementations
             return _mapper.Map<UserDto>(userSaved);
         }
 
-        private static string GetSHA1(String texto)
-        {
-            SHA1 sha1 = SHA1CryptoServiceProvider.Create();
-            Byte[] textOriginal = ASCIIEncoding.Default.GetBytes(texto);
-            Byte[] hash = sha1.ComputeHash(textOriginal);
-            StringBuilder cadena = new StringBuilder();
-            foreach (byte i in hash)
-            {
-                cadena.AppendFormat("{0:x2}", i);
-            }
-            return cadena.ToString();
-        }
+
 
 
     }

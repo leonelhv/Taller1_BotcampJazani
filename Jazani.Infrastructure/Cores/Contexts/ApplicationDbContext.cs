@@ -1,8 +1,5 @@
-﻿
-
-using Jazani.Domain.Admins.Models;
-using Jazani.Infrastructure.Admins.Configurations;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Jazani.Infrastructure.Cores.Contexts
 {
@@ -12,16 +9,10 @@ namespace Jazani.Infrastructure.Cores.Contexts
         {
         }
 
-        #region "DbSet"
-        public DbSet<Periocity> Periocities { get; set; }
-        public DbSet<User> Users { get; set; }
-        #endregion
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfiguration(new PeriocityConfiguration());
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
     }

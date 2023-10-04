@@ -9,7 +9,7 @@ namespace Jazani.Domain.Admins.Models
         public string Username { get; set; } = default!;
         public string Password { get; set; } = default!;
         public int? UserId { get; set; }
-        public DateTimeOffset RegistrationDate { get; set; }
+        public DateTime RegistrationDate { get; set; }
         public bool State { get; set; }
         public bool LdapAuthentication { get; set; }
         public string? TokenUuid { get; set; }
