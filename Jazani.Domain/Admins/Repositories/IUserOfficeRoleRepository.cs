@@ -3,7 +3,7 @@ using Jazani.Domain.Cores.Repositories;
 
 namespace Jazani.Domain.Admins.Repositories
 {
-    public interface IUserRepository : ICrudRepository<User, int>
+    public interface IUserOfficeRoleRepository : ICrudRepository<UserOfficeRole, int>
     {
     }
 }

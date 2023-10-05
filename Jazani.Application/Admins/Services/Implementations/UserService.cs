@@ -36,10 +36,9 @@ namespace Jazani.Application.Admins.Services.Implementations
             user.IsInspector = 0;
             user.Password = PasswordHasher.HashPassword(user.Password);
 
+            await _userRepository.SaveAsync(user);
 
-            User userSaved = await _userRepository.SaveAsync(user);
-
-            return _mapper.Map<UserDto>(userSaved);
+            return _mapper.Map<UserDto>(user);
         }
 
 
