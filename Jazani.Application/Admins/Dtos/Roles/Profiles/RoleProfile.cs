@@ -8,6 +8,7 @@ namespace Jazani.Application.Admins.Dtos.Roles.Profiles
         public RoleProfile()
         {
             CreateMap<Role, RoleDto>();
+            CreateMap<Role, RoleSimpleDto>();
             CreateMap<Role, RoleSaveDto>().ReverseMap();
         }
     }

@@ -5,9 +5,9 @@ namespace Jazani.Application.Admins.Services
     public interface IUserOfficeRoleService
     {
         Task<IReadOnlyList<UserOfficeRoleDto>> FindAllAsync();
-        Task<UserOfficeRoleDto?> FindByIdAsync(int id);
-        Task<UserOfficeRoleDto> CreateAsync(UserOfficeRoleSaveDto userOfficeRoleSaveDto);
-        Task<UserOfficeRoleDto> EditAsync(int id, UserOfficeRoleSaveDto userOfficeRoleSaveDto);
-        Task<UserOfficeRoleDto> DisabledAsync(int id);
+        Task<UserOfficeRoleDto?> FindByIdAsync(int UserId, int OfficeId, int RoleId);
+        Task<UserOfficeRoleBaseDto> CreateAsync(UserOfficeRoleSaveDto userOfficeRoleSaveDto);
+        Task<UserOfficeRoleBaseDto> EditAsync(int UserId, int OfficeId, int RoleId, UserOfficeRoleSaveDto userOfficeRoleSaveDto);
+        Task<UserOfficeRoleBaseDto> DisabledAsync(int UserId, int OfficeId, int RoleId);
     }
 }
