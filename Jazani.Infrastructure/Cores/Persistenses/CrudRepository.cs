@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Jazani.Infrastructure.Cores.Persistenses
 {
-    public class CrudRepository<T, ID> : ICrudRepository<T, ID> where T : class
+    public abstract class CrudRepository<T, ID> : ICrudRepository<T, ID> where T : class
     {
 
         private readonly ApplicationDbContext _dbContext;

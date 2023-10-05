@@ -15,5 +15,7 @@ namespace Jazani.Domain.Admins.Models
         public string? TokenUuid { get; set; }
         public int? NotificationCount { get; set; }
         public int? IsInspector { get; set; }
+
+        public virtual ICollection<UserOfficeRole> UserOfficeRoles { get; set; }
     }
 }
