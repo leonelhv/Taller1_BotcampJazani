@@ -18,6 +18,7 @@ namespace Jazani.Infrastructure.Admins.Persistences
         {
             return await _dbContext.Set<UserOfficeRole>()
                 .Include(t => t.User)
+                .Include(t => t.Role)
                 .AsNoTracking()
                 .ToListAsync();
         }
@@ -26,6 +27,7 @@ namespace Jazani.Infrastructure.Admins.Persistences
         {
             return await _dbContext.Set<UserOfficeRole>()
                 .Include(t => t.User)
+                .Include(t => t.Role)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(t => t.UserId == id);
         }

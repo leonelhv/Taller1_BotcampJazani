@@ -16,6 +16,7 @@ namespace Jazani.Infrastructure.Admins.Configurations
                 builder.Property(t => t.State).HasColumnName("state");
 
                 builder.HasOne(one => one.User).WithMany(many => many.UserOfficeRoles).HasForeignKey(fk => fk.UserId);
+                builder.HasOne(one => one.Role).WithMany(many => many.UserOfficeRoles).HasForeignKey(fk => fk.RoleId);
             }
         }
     }
