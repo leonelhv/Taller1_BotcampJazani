@@ -5,9 +5,9 @@ namespace Jazani.Application.Admins.Dtos.UserOfficeRoles
 {
     public class UserOfficeRoleDto
     {
-        public UserSimpleDto User { get; set; } = default!;
-        public int OfficeId { get; set; } = default!;
-        public RoleSimpleDto Role { get; set; } = default!;
+        public UserSimpleDto User { get; set; }
+        public int OfficeId { get; set; }
+        public RoleSimpleDto Role { get; set; }
         public DateTime RegistrationDate { get; set; }
         public bool State { get; set; }
     }

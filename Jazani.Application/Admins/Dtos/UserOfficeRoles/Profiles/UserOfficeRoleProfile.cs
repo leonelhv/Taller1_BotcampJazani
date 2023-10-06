@@ -9,6 +9,7 @@ namespace Jazani.Application.Admins.Dtos.UserOfficeRoles.Profiles
         {
             CreateMap<UserOfficeRole, UserOfficeRoleDto>();
             CreateMap<UserOfficeRole, UserOfficeRoleBaseDto>();
+            CreateMap<UserOfficeRole, UserOfficeRoleUpdateDto>().ReverseMap();
             CreateMap<UserOfficeRole, UserOfficeRoleSaveDto>().ReverseMap();
         }
     }

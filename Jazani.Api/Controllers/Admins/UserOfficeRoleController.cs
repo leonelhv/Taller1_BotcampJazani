@@ -41,7 +41,7 @@ namespace Jazani.Api.Controllers.Admins
 
         // PUT api/<PeriocityController>/5
         [HttpPut("{UserId}/{OfficeId}/{RoleId}")]
-        public async Task<UserOfficeRoleBaseDto> Put(int UserId, int OfficeId, int RoleId, [FromBody] UserOfficeRoleSaveDto userOfficeRoleSaveDto)
+        public async Task<UserOfficeRoleBaseDto> Put(int UserId, int OfficeId, int RoleId, [FromBody] UserOfficeRoleUpdateDto userOfficeRoleSaveDto)
         {
             return await _userOfficeRoleService.EditAsync(UserId, OfficeId, RoleId, userOfficeRoleSaveDto);
         }

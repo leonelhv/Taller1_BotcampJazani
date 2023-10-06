@@ -2,9 +2,9 @@
 {
     public class UserOfficeRoleBaseDto
     {
-        public int UserId { get; set; } = default!;
-        public int OfficeId { get; set; } = default!;
-        public int RoleId { get; set; } = default!;
+        public int UserId { get; set; }
+        public int OfficeId { get; set; }
+        public int RoleId { get; set; }
         public DateTime RegistrationDate { get; set; }
         public bool State { get; set; }
     }

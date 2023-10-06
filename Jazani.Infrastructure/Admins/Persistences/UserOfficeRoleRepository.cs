@@ -24,25 +24,40 @@ namespace Jazani.Infrastructure.Admins.Persistences
         public async Task<UserOfficeRole?> FindByIdAsync(int UserId, int OfficeId, int RoleId)
         {
             return await _dbContext.Set<UserOfficeRole>()
-                .Include(t => t.User)
-                .Include(t => t.Role)
+                 .Include(t => t.User)
+                 .Include(t => t.Role)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.UserId == UserId && x.OfficeId == OfficeId && x.RoleId == RoleId);
         }
 
-        public async Task<UserOfficeRole> SaveAsync(UserOfficeRole userOfficeRole)
+        public async Task<UserOfficeRole> UpdateAsync(UserOfficeRole userOfficeRole, int UserId, int OfficeId, int RoleId)
         {
-            EntityState state = _dbContext.Entry(userOfficeRole).State;
 
-            _ = state switch
-            {
-                EntityState.Detached => _dbContext.Set<UserOfficeRole>().Add(userOfficeRole),
-                EntityState.Modified => _dbContext.Set<UserOfficeRole>().Update(userOfficeRole),
-            };
+            var existingUserOfficeRole = await _dbContext.Set<UserOfficeRole>()
+             .FirstOrDefaultAsync(uor =>
+          uor.UserId == UserId &&
+          uor.OfficeId == OfficeId &&
+          uor.RoleId == RoleId);
 
-            _dbContext.Entry(userOfficeRole).Reference(e => e.User).Load();
-            _dbContext.Entry(userOfficeRole).Reference(e => e.Role).Load();
 
+            _dbContext.Set<UserOfficeRole>().Remove(existingUserOfficeRole);
+            await _dbContext.SaveChangesAsync();
+            _dbContext.Set<UserOfficeRole>().Add(userOfficeRole);
+            await _dbContext.SaveChangesAsync();
+            return userOfficeRole;
+
+        }
+
+        public async Task<UserOfficeRole> AddAsync(UserOfficeRole userOfficeRole)
+        {
+            _dbContext.Set<UserOfficeRole>().Add(userOfficeRole);
+            await _dbContext.SaveChangesAsync();
+            return userOfficeRole;
+        }
+
+        public async Task<UserOfficeRole> DeleteAsync(UserOfficeRole userOfficeRole)
+        {
+            _dbContext.Set<UserOfficeRole>().Update(userOfficeRole);
             await _dbContext.SaveChangesAsync();
             return userOfficeRole;
         }
