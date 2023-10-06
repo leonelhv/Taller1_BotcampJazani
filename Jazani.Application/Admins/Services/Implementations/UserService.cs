@@ -51,9 +51,9 @@ namespace Jazani.Application.Admins.Services.Implementations
 
             user.Password = PasswordHasher.HashPassword(user.Password);
 
-            User userSaved = await _userRepository.SaveAsync(user);
+            await _userRepository.SaveAsync(user);
 
-            return _mapper.Map<UserDto>(userSaved);
+            return _mapper.Map<UserDto>(user);
         }
         public async Task<UserDto> DisabledAsync(int id)
         {

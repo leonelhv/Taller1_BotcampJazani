@@ -1,9 +1,8 @@
-﻿
-
-namespace Jazani.Domain.Admins.Models
+﻿namespace Jazani.Domain.Admins.Models
 {
     public class User
     {
+
         public int Id { get; set; }
         public int? RoleId { get; set; }
         public string Username { get; set; } = default!;
@@ -16,6 +15,8 @@ namespace Jazani.Domain.Admins.Models
         public int? NotificationCount { get; set; }
         public int? IsInspector { get; set; }
 
+        public virtual List<OfficeRole> OfficeRoles { get; } = new();
         public virtual ICollection<UserOfficeRole> UserOfficeRoles { get; set; }
+
     }
 }

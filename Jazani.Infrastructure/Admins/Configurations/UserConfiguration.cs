@@ -24,6 +24,8 @@ namespace Jazani.Infrastructure.Admins.Configurations
             builder.Property(t => t.IsInspector).HasColumnName("isinspector");
 
 
+
+
         }
     }
 }
