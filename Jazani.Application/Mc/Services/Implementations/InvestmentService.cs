@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using Jazani.Application.Cores.Contexts.Exceptions;
-using Jazani.Domain.Mc.Models;
-using Jazani.Domain.Mc.Repositories;
-using Jazani.Taller.Aplication.Mc.Dtos.Investments;
-using Microsoft.Extensions.Logging;
-
-namespace Jazani.Application.Mc.Services.Implementations
+﻿namespace Jazani.Application.Mc.Services.Implementations
 {
     public class InvestmentService : IInvestmentService
     {
