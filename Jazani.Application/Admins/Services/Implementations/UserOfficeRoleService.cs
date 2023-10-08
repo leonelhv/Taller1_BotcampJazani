@@ -17,29 +17,30 @@ namespace Jazani.Application.Admins.Services.Implementations
         }
 
 
-        public async Task<UserOfficeRoleBaseDto> CreateAsync(UserOfficeRoleSaveDto userOfficeRoleSaveDto)
+        public async Task<UserOfficeRoleDto> CreateAsync(UserOfficeRoleSaveDto userOfficeRoleSaveDto)
         {
             UserOfficeRole userOfficeRole = _mapper.Map<UserOfficeRole>(userOfficeRoleSaveDto);
             userOfficeRole.RegistrationDate = DateTime.Now;
             userOfficeRole.State = true;
-            await _userOfficeRoleRepository.AddAsync(userOfficeRole);
-            return _mapper.Map<UserOfficeRoleBaseDto>(userOfficeRole);
+            await _userOfficeRoleRepository.SaveAsync(userOfficeRole);
+            return _mapper.Map<UserOfficeRoleDto>(userOfficeRole);
         }
 
-        public async Task<UserOfficeRoleBaseDto> DisabledAsync(int UserId, int OfficeId, int RoleId)
+        public async Task<UserOfficeRoleDto> DisabledAsync(int id)
         {
-            UserOfficeRole userOfficeRole = await _userOfficeRoleRepository.FindByIdAsync(UserId, OfficeId, RoleId);
+            UserOfficeRole userOfficeRole = await _userOfficeRoleRepository.FindByIdAsync(id);
             userOfficeRole.State = false;
-            UserOfficeRole userOfficeRoleSaved = await _userOfficeRoleRepository.DeleteAsync(userOfficeRole);
-            return _mapper.Map<UserOfficeRoleBaseDto>(userOfficeRoleSaved);
+            UserOfficeRole userOfficeRoleSaved = await _userOfficeRoleRepository.SaveAsync(userOfficeRole);
+            return _mapper.Map<UserOfficeRoleDto>(userOfficeRoleSaved);
         }
 
-        public async Task<UserOfficeRoleBaseDto> EditAsync(int UserId, int OfficeId, int RoleId, UserOfficeRoleUpdateDto userOfficeRoleUpdateDto)
+
+        public async Task<UserOfficeRoleDto> EditAsync(int id, UserOfficeRoleSaveDto userOfficeRoleSaveDto)
         {
-            UserOfficeRole userOfficeRole = await _userOfficeRoleRepository.FindByIdAsync(UserId, OfficeId, RoleId);
-            _mapper.Map<UserOfficeRoleUpdateDto, UserOfficeRole>(userOfficeRoleUpdateDto, userOfficeRole);
-            UserOfficeRole userOfficeRoleSaved = await _userOfficeRoleRepository.UpdateAsync(userOfficeRole, UserId, OfficeId, RoleId);
-            return _mapper.Map<UserOfficeRoleBaseDto>(userOfficeRoleSaved);
+            UserOfficeRole userOfficeRole = await _userOfficeRoleRepository.FindByIdAsync(id);
+            _mapper.Map<UserOfficeRoleSaveDto, UserOfficeRole>(userOfficeRoleSaveDto, userOfficeRole);
+            await _userOfficeRoleRepository.SaveAsync(userOfficeRole);
+            return _mapper.Map<UserOfficeRoleDto>(userOfficeRole);
         }
 
         public async Task<IReadOnlyList<UserOfficeRoleDto>> FindAllAsync()
@@ -48,10 +49,12 @@ namespace Jazani.Application.Admins.Services.Implementations
             return _mapper.Map<IReadOnlyList<UserOfficeRoleDto>>(roles);
         }
 
-        public async Task<UserOfficeRoleDto?> FindByIdAsync(int UserId, int OfficeId, int RoleId)
+        public async Task<UserOfficeRoleDto?> FindByIdAsync(int id)
         {
-            UserOfficeRole role = await _userOfficeRoleRepository.FindByIdAsync(UserId, OfficeId, RoleId);
+            UserOfficeRole role = await _userOfficeRoleRepository.FindByIdAsync(id);
             return _mapper.Map<UserOfficeRoleDto?>(role);
         }
+
+
     }
 }

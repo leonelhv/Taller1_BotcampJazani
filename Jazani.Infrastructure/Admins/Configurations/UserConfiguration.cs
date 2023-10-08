@@ -11,6 +11,7 @@ namespace Jazani.Infrastructure.Admins.Configurations
         {
             builder.ToTable("user", "adm");
             builder.HasKey(t => t.Id);
+            builder.Property(t => t.Id).HasColumnName("id").ValueGeneratedOnAdd();
             builder.Property(t => t.RoleId).HasColumnName("roleid");
             builder.Property(t => t.Username).HasColumnName("username");
             builder.Property(t => t.Password).HasColumnName("password");

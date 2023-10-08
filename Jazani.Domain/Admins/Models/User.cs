@@ -15,8 +15,8 @@
         public int? NotificationCount { get; set; }
         public int? IsInspector { get; set; }
 
-        public virtual List<OfficeRole> OfficeRoles { get; } = new();
-        public virtual ICollection<UserOfficeRole> UserOfficeRoles { get; set; }
+        public virtual ICollection<UserOfficeRole>? UserOfficeRoles { get; set; }
+
 
     }
 }

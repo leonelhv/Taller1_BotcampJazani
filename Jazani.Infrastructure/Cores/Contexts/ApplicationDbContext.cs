@@ -1,5 +1,4 @@
-﻿using Jazani.Domain.Admins.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace Jazani.Infrastructure.Cores.Contexts
@@ -14,11 +13,6 @@ namespace Jazani.Infrastructure.Cores.Contexts
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-            modelBuilder.Entity<User>()
-                .HasMany(e => e.OfficeRoles)
-                .WithMany(e => e.Users)
-                .UsingEntity<UserOfficeRole>();
 
         }
 
