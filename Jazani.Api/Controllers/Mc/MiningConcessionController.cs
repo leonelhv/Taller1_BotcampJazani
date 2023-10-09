@@ -1,55 +1,65 @@
-﻿using Jazani.Taller.Aplication.Mc.Dtos.MiningConcessions;
+﻿using Jazani.Api.Exceptions;
+using Jazani.Taller.Aplication.Mc.Dtos.MiningConcessions;
 using Jazani.Taller.Aplication.Mc.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Jazani.Api.Controllers.Mc
 {
-
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class MiningConcessionController : ControllerBase
     {
         private readonly IMiningConcessionService _miniconcService;
+
         public MiningConcessionController(IMiningConcessionService miniconcService)
         {
             _miniconcService = miniconcService;
         }
 
-        // GET: api/<MiningConcessionController>
         [HttpGet]
-        public async Task<IEnumerable<MiningConcessionDto>> Get()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<MiningConcessionDto>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorModel))]
+        public async Task<Results<NotFound, Ok<IEnumerable<MiningConcessionDto>>>> Get()
         {
-            return await _miniconcService.FindAllAsync();
+            var response = await _miniconcService.FindAllAsync();
+            return TypedResults.Ok<IEnumerable<MiningConcessionDto>>(response);
         }
 
-        // GET api/<MiningConcessionController>/5
         [HttpGet("{id}")]
-        public async Task<MiningConcessionDto> Get(int id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MiningConcessionDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorModel))]
+        public async Task<Results<NotFound, Ok<MiningConcessionDto>>> Get(int id)
         {
-            return await _miniconcService.FindByIdAsync(id);
+            var response = await _miniconcService.FindByIdAsync(id);
+            return TypedResults.Ok(response);
         }
 
-        // POST api/<MiningConcessionController>
         [HttpPost]
-        public async Task<MiningConcessionDto> Post([FromBody] MiningConcessionSaveDto miningConcSaveDto)
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(MiningConcessionDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponse))]
+        public async Task<Results<BadRequest, CreatedAtRoute<MiningConcessionDto>>> Post([FromBody] MiningConcessionSaveDto miningConcSaveDto)
         {
-            return await _miniconcService.CreateAsync(miningConcSaveDto);
+            var response = await _miniconcService.CreateAsync(miningConcSaveDto);
+            return TypedResults.CreatedAtRoute(response);
         }
 
-        // PUT api/<MiningConcessionController>/5
         [HttpPut("{id}")]
-        public async Task<MiningConcessionDto> Put(int id, [FromBody] MiningConcessionSaveDto miningConcSaveDto)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MiningConcessionDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponse))]
+        public async Task<Results<BadRequest, Ok<MiningConcessionDto>>> Put(int id, [FromBody] MiningConcessionSaveDto miningConcSaveDto)
         {
-            return await _miniconcService.EditAsync(id, miningConcSaveDto);
+            var response = await _miniconcService.EditAsync(id, miningConcSaveDto);
+            return TypedResults.Ok(response);
         }
 
-        // DELETE api/<MiningConcessionController>/5
         [HttpDelete("{id}")]
-        public async Task<MiningConcessionDto> Delete(int id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MiningConcessionDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponse))]
+        public async Task<Results<BadRequest, Ok<MiningConcessionDto>>> Delete(int id)
         {
-            return await _miniconcService.DisabledAsync(id);
+            var response = await _miniconcService.DisabledAsync(id);
+            return TypedResults.Ok(response);
         }
     }
 }

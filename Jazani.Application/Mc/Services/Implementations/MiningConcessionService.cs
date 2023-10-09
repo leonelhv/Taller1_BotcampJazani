@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
-using Jazani.Taller.Aplication.Mc.Dtos.Investmenttypes;
+using Jazani.Application.Cores.Contexts.Exceptions;
 using Jazani.Taller.Aplication.Mc.Dtos.MiningConcessions;
 using Jazani.Taller.Domain.Mc.Models;
 using Jazani.Taller.Domain.Mc.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace Jazani.Taller.Aplication.Mc.Services.Implemetations
 {
@@ -15,11 +11,13 @@ namespace Jazani.Taller.Aplication.Mc.Services.Implemetations
     {
         private readonly IMiningConcessionRepository _miniconRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<MiningConcessionService> _logger;
 
-        public MiningConcessionService(IMiningConcessionRepository miniRepository, IMapper mapper)
+        public MiningConcessionService(IMiningConcessionRepository miniRepository, IMapper mapper, ILogger<MiningConcessionService> logger)
         {
             _miniconRepository = miniRepository;
             _mapper = mapper;
+            _logger = logger;
         }
         public async Task<MiningConcessionDto> CreateAsync(MiningConcessionSaveDto saveDto)
         {
@@ -33,7 +31,8 @@ namespace Jazani.Taller.Aplication.Mc.Services.Implemetations
 
         public async Task<MiningConcessionDto> DisabledAsync(int id)
         {
-            MiningConcession minicon = await _miniconRepository.FindByIdAsync(id);
+            MiningConcession? minicon = await _miniconRepository.FindByIdAsync(id);
+            if (minicon is null) throw MiningConcessionNotFound(id);
             minicon.State = false;
 
             MiningConcession auctionSaved = await _miniconRepository.SaveAsync(minicon);
@@ -42,7 +41,9 @@ namespace Jazani.Taller.Aplication.Mc.Services.Implemetations
 
         public async Task<MiningConcessionDto> EditAsync(int id, MiningConcessionSaveDto saveDto)
         {
-            MiningConcession minicon = await _miniconRepository.FindByIdAsync(id);
+            MiningConcession? minicon = await _miniconRepository.FindByIdAsync(id);
+
+            if (minicon is null) throw MiningConcessionNotFound(id);
 
             _mapper.Map<MiningConcessionSaveDto, MiningConcession>(saveDto, minicon);
 
@@ -53,16 +54,29 @@ namespace Jazani.Taller.Aplication.Mc.Services.Implemetations
 
         public async Task<IReadOnlyList<MiningConcessionDto>> FindAllAsync()
         {
-            IReadOnlyList<MiningConcession> invesme = await _miniconRepository.FindAllAsync();
+            IReadOnlyList<MiningConcession> minicon = await _miniconRepository.FindAllAsync();
 
-            return _mapper.Map<IReadOnlyList<MiningConcessionDto>>(invesme);
+            return _mapper.Map<IReadOnlyList<MiningConcessionDto>>(minicon);
         }
 
         public async Task<MiningConcessionDto?> FindByIdAsync(int id)
         {
-            MiningConcession invesm = await _miniconRepository.FindByIdAsync(id);
+            MiningConcession? minicon = await _miniconRepository.FindByIdAsync(id);
 
-            return _mapper.Map<MiningConcessionDto>(invesm);
+            if (minicon is null)
+            {
+                _logger.LogWarning("MiningConcession no encontrado para el id: " + id);
+                throw MiningConcessionNotFound(id);
+            }
+
+            _logger.LogInformation("MiningConcession su id es {MiningConcessionid}: ", minicon.Id);
+
+            return _mapper.Map<MiningConcessionDto>(minicon);
+        }
+
+        private NoteFoundCoreException MiningConcessionNotFound(int id)
+        {
+            return new NoteFoundCoreException("MiningConcession no encontrado para el id: " + id);
         }
     }
 }

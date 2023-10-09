@@ -1,56 +1,65 @@
-﻿using Jazani.Taller.Aplication.Mc.Dtos.Investmenttypes;
+﻿using Jazani.Api.Exceptions;
+using Jazani.Taller.Aplication.Mc.Dtos.Investmenttypes;
 using Jazani.Taller.Aplication.Mc.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Jazani.Api.Controllers.Mc
 {
-
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class InvestmenttypeController : ControllerBase
     {
         private readonly IInvestmenttypeService _invesmenService;
+
         public InvestmenttypeController(IInvestmenttypeService invesmeService)
         {
             _invesmenService = invesmeService;
         }
 
-
-        // GET: api/<InvestmenttypeController>
         [HttpGet]
-        public async Task<IEnumerable<InvestmenttypeDto>> Get()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<InvestmenttypeDto>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorModel))]
+        public async Task<Results<NotFound, Ok<IEnumerable<InvestmenttypeDto>>>> Get()
         {
-            return await _invesmenService.FindAllAsync();
+            var response = await _invesmenService.FindAllAsync();
+            return TypedResults.Ok<IEnumerable<InvestmenttypeDto>>(response);
         }
 
-        // GET api/<InvestmenttypeController>/5
         [HttpGet("{id}")]
-        public async Task<InvestmenttypeDto> Get(int id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(InvestmenttypeDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorModel))]
+        public async Task<Results<NotFound, Ok<InvestmenttypeDto>>> Get(int id)
         {
-            return await _invesmenService.FindByIdAsync(id);
+            var response = await _invesmenService.FindByIdAsync(id);
+            return TypedResults.Ok(response);
         }
 
-        // POST api/<InvestmenttypeController>
         [HttpPost]
-        public async Task<InvestmenttypeDto> Post([FromBody] InvestmenttypeSaveDto invesSaveDto)
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(InvestmenttypeDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponse))]
+        public async Task<Results<BadRequest, CreatedAtRoute<InvestmenttypeDto>>> Post([FromBody] InvestmenttypeSaveDto invesSaveDto)
         {
-            return await _invesmenService.CreateAsync(invesSaveDto);
+            var response = await _invesmenService.CreateAsync(invesSaveDto);
+            return TypedResults.CreatedAtRoute(response);
         }
 
-        // PUT api/<InvestmenttypeController>/5
         [HttpPut("{id}")]
-        public async Task<InvestmenttypeDto> Put(int id, [FromBody] InvestmenttypeSaveDto invesmeSaveDto)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(InvestmenttypeDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponse))]
+        public async Task<Results<BadRequest, Ok<InvestmenttypeDto>>> Put(int id, [FromBody] InvestmenttypeSaveDto invesmeSaveDto)
         {
-            return await _invesmenService.EditAsync(id, invesmeSaveDto);
+            var response = await _invesmenService.EditAsync(id, invesmeSaveDto);
+            return TypedResults.Ok(response);
         }
 
-        // DELETE api/<InvestmenttypeController>/5
         [HttpDelete("{id}")]
-        public async Task<InvestmenttypeDto> Delete(int id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(InvestmenttypeDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponse))]
+        public async Task<Results<BadRequest, Ok<InvestmenttypeDto>>> Delete(int id)
         {
-            return await _invesmenService.DisabledAsync(id);
+            var response = await _invesmenService.DisabledAsync(id);
+            return TypedResults.Ok(response);
         }
     }
 }

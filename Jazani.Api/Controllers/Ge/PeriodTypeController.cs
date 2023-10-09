@@ -1,55 +1,65 @@
-﻿using Jazani.Taller.Aplication.Ge.Dtos.PeriodTypes;
+﻿using Jazani.Api.Exceptions;
+using Jazani.Taller.Aplication.Ge.Dtos.PeriodTypes;
 using Jazani.Taller.Aplication.Ge.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Jazani.Api.Controllers.Ge
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class PeriodTypeController : ControllerBase
     {
         private readonly IPeriodTypeService _periodService;
+
         public PeriodTypeController(IPeriodTypeService perioService)
         {
             _periodService = perioService;
         }
 
-        // GET: api/<PeriodTypeController>
         [HttpGet]
-        public async Task<IEnumerable<PeriodTypeDto>> Get()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<PeriodTypeDto>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorModel))]
+        public async Task<Results<NotFound, Ok<IEnumerable<PeriodTypeDto>>>> Get()
         {
-            return await _periodService.FindAllAsync();
+            var response = await _periodService.FindAllAsync();
+            return TypedResults.Ok<IEnumerable<PeriodTypeDto>>(response);
         }
 
-        // GET api/<PeriodTypeController>/5
         [HttpGet("{id}")]
-        public async Task<PeriodTypeDto> Get(int id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PeriodTypeDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorModel))]
+        public async Task<Results<NotFound, Ok<PeriodTypeDto>>> Get(int id)
         {
-            return await _periodService.FindByIdAsync(id);
+            var response = await _periodService.FindByIdAsync(id);
+            return TypedResults.Ok(response);
         }
 
-        // POST api/<PeriodTypeController>
         [HttpPost]
-        public async Task<PeriodTypeDto> Post([FromBody] PeriodTypeSaveDto periodSaveDto)
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(PeriodTypeDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponse))]
+        public async Task<Results<BadRequest, CreatedAtRoute<PeriodTypeDto>>> Post([FromBody] PeriodTypeSaveDto periodSaveDto)
         {
-            return await _periodService.CreateAsync(periodSaveDto);
+            var response = await _periodService.CreateAsync(periodSaveDto);
+            return TypedResults.CreatedAtRoute(response);
         }
 
-        // PUT api/<PeriodTypeController>/5
         [HttpPut("{id}")]
-        public async Task<PeriodTypeDto> Put(int id, [FromBody] PeriodTypeSaveDto periodSaveDto)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PeriodTypeDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponse))]
+        public async Task<Results<BadRequest, Ok<PeriodTypeDto>>> Put(int id, [FromBody] PeriodTypeSaveDto periodSaveDto)
         {
-            return await _periodService.EditAsync(id, periodSaveDto);
+            var response = await _periodService.EditAsync(id, periodSaveDto);
+            return TypedResults.Ok(response);
         }
 
-        // DELETE api/<PeriodTypeController>/5
         [HttpDelete("{id}")]
-        public async Task<PeriodTypeDto> Delete(int id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PeriodTypeDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponse))]
+        public async Task<Results<BadRequest, Ok<PeriodTypeDto>>> Delete(int id)
         {
-            return await _periodService.DisabledAsync(id);
+            var response = await _periodService.DisabledAsync(id);
+            return TypedResults.Ok(response);
         }
     }
-
 }
