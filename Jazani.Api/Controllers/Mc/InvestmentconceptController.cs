@@ -1,5 +1,7 @@
-﻿using Jazani.Application.Mc.Services;
+﻿using Jazani.Api.Exceptions;
+using Jazani.Application.Mc.Services;
 using Jazani.Taller.Aplication.Mc.Dtos.Investmentconcepts;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Jazani.Api.Controllers.Mc
@@ -17,33 +19,48 @@ namespace Jazani.Api.Controllers.Mc
         }
 
         [HttpGet]
-        public async Task<IEnumerable<InvestmentconceptDto>> Get()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<InvestmentconceptDto>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorModel))]
+        public async Task<Results<NotFound, Ok<IEnumerable<InvestmentconceptDto>>>> Get()
         {
-            return await _investmentconceptService.FindAllAsync();
+            var response = await _investmentconceptService.FindAllAsync();
+            return TypedResults.Ok<IEnumerable<InvestmentconceptDto>>(response);
         }
 
         [HttpGet("{id}")]
-        public async Task<InvestmentconceptDto?> Get(int id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(InvestmentconceptDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorModel))]
+        public async Task<Results<NotFound, Ok<InvestmentconceptDto>>> Get(int id)
         {
-            return await _investmentconceptService.FindByIdAsync(id);
+            var response = await _investmentconceptService.FindByIdAsync(id);
+            return TypedResults.Ok(response);
         }
 
         [HttpPost]
-        public async Task<InvestmentconceptDto> Post([FromBody] InvestmentconceptSaveDto investmentconceptSave)
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(InvestmentconceptDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponse))]
+        public async Task<Results<BadRequest, CreatedAtRoute<InvestmentconceptDto>>> Post([FromBody] InvestmentconceptSaveDto investmentconceptSave)
         {
-            return await _investmentconceptService.CreateAsync(investmentconceptSave);
+            var response = await _investmentconceptService.CreateAsync(investmentconceptSave);
+            return TypedResults.CreatedAtRoute(response);
         }
 
         [HttpPut("{id}")]
-        public async Task<InvestmentconceptDto> Put(int id, [FromBody] InvestmentconceptSaveDto investmentconceptSave)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(InvestmentconceptDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponse))]
+        public async Task<Results<BadRequest, Ok<InvestmentconceptDto>>> Put(int id, [FromBody] InvestmentconceptSaveDto investmentconceptSave)
         {
-            return await _investmentconceptService.EditAsync(id, investmentconceptSave);
+            var response = await _investmentconceptService.EditAsync(id, investmentconceptSave);
+            return TypedResults.Ok(response);
         }
 
         [HttpDelete("{id}")]
-        public async Task<InvestmentconceptDto> Disabled(int id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(InvestmentconceptDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponse))]
+        public async Task<Results<BadRequest, Ok<InvestmentconceptDto>>> Delete(int id)
         {
-            return await _investmentconceptService.DisabledAsync(id);
+            var response = await _investmentconceptService.DisabledAsync(id);
+            return TypedResults.Ok(response);
         }
     }
 }

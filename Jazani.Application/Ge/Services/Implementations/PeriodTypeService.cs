@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Jazani.Application.Cores.Contexts.Exceptions;
 using Jazani.Taller.Aplication.Ge.Dtos.PeriodTypes;
 using Jazani.Taller.Domain.Ge.Models;
 using Jazani.Taller.Domain.Ge.Repositories;
+using Microsoft.Extensions.Logging;
 
 namespace Jazani.Taller.Aplication.Ge.Services.Implementations
 {
@@ -9,11 +11,13 @@ namespace Jazani.Taller.Aplication.Ge.Services.Implementations
     {
         private readonly IPeriodTypeRepository _periodRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<PeriodTypeService> _logger;
 
-        public PeriodTypeService(IPeriodTypeRepository periodRepository, IMapper mapper)
+        public PeriodTypeService(IPeriodTypeRepository periodRepository, IMapper mapper, ILogger<PeriodTypeService> logger)
         {
             _periodRepository = periodRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<PeriodTypeDto> CreateAsync(PeriodTypeSaveDto periodDto)
@@ -28,7 +32,8 @@ namespace Jazani.Taller.Aplication.Ge.Services.Implementations
 
         public async Task<PeriodTypeDto> DisabledAsync(int id)
         {
-            PeriodType period = await _periodRepository.FindByIdAsync(id);
+            PeriodType? period = await _periodRepository.FindByIdAsync(id);
+            if (period is null) throw PeriodTypeNotFound(id);
             period.State = false;
 
             PeriodType periodSaved = await _periodRepository.SaveAsync(period);
@@ -38,7 +43,9 @@ namespace Jazani.Taller.Aplication.Ge.Services.Implementations
 
         public async Task<PeriodTypeDto> EditAsync(int id, PeriodTypeSaveDto periodSaveDto)
         {
-            PeriodType period = await _periodRepository.FindByIdAsync(id);
+            PeriodType? period = await _periodRepository.FindByIdAsync(id);
+
+            if (period is null) throw PeriodTypeNotFound(id);
 
             _mapper.Map<PeriodTypeSaveDto, PeriodType>(periodSaveDto, period);
 
@@ -56,10 +63,23 @@ namespace Jazani.Taller.Aplication.Ge.Services.Implementations
 
         public async Task<PeriodTypeDto?> FindByIdAsync(int id)
         {
-            PeriodType period = await _periodRepository.FindByIdAsync(id);
+            PeriodType? period = await _periodRepository.FindByIdAsync(id);
+
+            if (period is null)
+            {
+                _logger.LogWarning("PeriodType no encontrado para el id: " + id);
+                throw PeriodTypeNotFound(id);
+            }
+
+            _logger.LogInformation("PeriodType su es {periodId}: ", period.Id);
 
             return _mapper.Map<PeriodTypeDto>(period);
 
+        }
+
+        private NoteFoundCoreException PeriodTypeNotFound(int id)
+        {
+            return new NoteFoundCoreException("PeriodType no encontrado para el id: " + id);
         }
     }
 }

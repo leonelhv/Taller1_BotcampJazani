@@ -1,55 +1,65 @@
-﻿using Jazani.Taller.Aplication.Ge.Dtos.MeasureUnits;
+﻿using Jazani.Api.Exceptions;
+using Jazani.Taller.Aplication.Ge.Dtos.MeasureUnits;
 using Jazani.Taller.Aplication.Ge.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Jazani.Api.Controllers.Ge
 {
-
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class MeasureUnitController : ControllerBase
     {
         private readonly IMeasureUnitService _measuService;
+
         public MeasureUnitController(IMeasureUnitService measuService)
         {
             _measuService = measuService;
         }
 
-        // GET: api/<MeasureUnitController>
         [HttpGet]
-        public async Task<IEnumerable<MeasureUnitDto>> Get()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<MeasureUnitDto>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorModel))]
+        public async Task<Results<NotFound, Ok<IEnumerable<MeasureUnitDto>>>> Get()
         {
-            return await _measuService.FindAllAsync();
+            var response = await _measuService.FindAllAsync();
+            return TypedResults.Ok<IEnumerable<MeasureUnitDto>>(response);
         }
 
-        // GET api/<MeasureUnitController>/5
         [HttpGet("{id}")]
-        public async Task<MeasureUnitDto> Get(int id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MeasureUnitDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorModel))]
+        public async Task<Results<NotFound, Ok<MeasureUnitDto>>> Get(int id)
         {
-            return await _measuService.FindByIdAsync(id);
+            var response = await _measuService.FindByIdAsync(id);
+            return TypedResults.Ok(response);
         }
 
-        // POST api/<MeasureUnitController>
         [HttpPost]
-        public async Task<MeasureUnitDto> Post([FromBody] MeasureUnitSaveDto measuSaveDto)
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(MeasureUnitDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponse))]
+        public async Task<Results<BadRequest, CreatedAtRoute<MeasureUnitDto>>> Post([FromBody] MeasureUnitSaveDto measuSaveDto)
         {
-            return await _measuService.CreateAsync(measuSaveDto);
+            var response = await _measuService.CreateAsync(measuSaveDto);
+            return TypedResults.CreatedAtRoute(response);
         }
 
-        // PUT api/<MeasureUnitController>/5
         [HttpPut("{id}")]
-        public async Task<MeasureUnitDto> Put(int id, [FromBody] MeasureUnitSaveDto measuSaveDto)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MeasureUnitDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponse))]
+        public async Task<Results<BadRequest, Ok<MeasureUnitDto>>> Put(int id, [FromBody] MeasureUnitSaveDto measuSaveDto)
         {
-            return await _measuService.EditAsync(id, measuSaveDto);
+            var response = await _measuService.EditAsync(id, measuSaveDto);
+            return TypedResults.Ok(response);
         }
 
-        // DELETE api/<MeasureUnitController>/5
         [HttpDelete("{id}")]
-        public async Task<MeasureUnitDto> Delete(int id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MeasureUnitDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponse))]
+        public async Task<Results<BadRequest, Ok<MeasureUnitDto>>> Delete(int id)
         {
-            return await _measuService.DisabledAsync(id);
+            var response = await _measuService.DisabledAsync(id);
+            return TypedResults.Ok(response);
         }
     }
 }
