@@ -47,7 +47,7 @@ public class InvestmentRepository : CrudRepository<Investment, int>, IInvestment
                 .Where(x =>
                     (filter.MiningConcessionId == 0 || x.MiningConcessionId == filter.MiningConcessionId)
                     && (filter.CurrencyTypeId == 0 || x.CurrencyTypeId == filter.CurrencyTypeId)
-                    && (filter.State == false || x.State == filter.State)
+                    && (x.State == filter.State)
                 );
         }
 
