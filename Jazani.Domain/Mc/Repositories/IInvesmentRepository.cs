@@ -3,7 +3,8 @@ using Jazani.Domain.Mc.Models;
 
 namespace Jazani.Domain.Mc.Repositories
 {
-    public interface IInvestmentRepository : ICrudRepository<Investment, int>
+    public interface IInvestmentRepository : ICrudRepository<Investment, int>, IPaginatedRepository<Investment>
     {
     }
 }
+

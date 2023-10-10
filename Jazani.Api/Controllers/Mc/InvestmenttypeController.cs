@@ -61,5 +61,6 @@ namespace Jazani.Api.Controllers.Mc
             var response = await _invesmenService.DisabledAsync(id);
             return TypedResults.Ok(response);
         }
+
     }
 }

@@ -11,7 +11,7 @@ namespace Jazani.Infrastructure.Mc.Configurations
         {
             builder.ToTable("investment", "mc");
             builder.HasKey(t => t.Id);
-            builder.Property(t => t.AmountInvested).HasColumnName("amountinvestd");
+            builder.Property(t => t.AmountInvested).HasColumnName("amountinvestd").HasColumnType("decimal");
             builder.Property(t => t.MiningConcessionId).HasColumnName("miningconcessionid");
             builder.Property(t => t.InvestmentTypeId).HasColumnName("investmenttypeid");
             builder.Property(t => t.CurrencyTypeId).HasColumnName("currencytypeid");

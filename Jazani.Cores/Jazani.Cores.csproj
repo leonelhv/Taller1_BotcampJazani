@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Jazani.Cores\Jazani.Cores.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -1,5 +1,7 @@
 ﻿using Jazani.Api.Exceptions;
+using Jazani.Application.Mc.Dtos.Investments;
 using Jazani.Application.Mc.Services;
+using Jazani.Core.Paginations;
 using Jazani.Taller.Aplication.Mc.Dtos.Investments;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -63,6 +65,12 @@ namespace Jazani.Api.Controllers.Mc
             var response = await _investmentService.DisabledAsync(id);
             return TypedResults.Ok(response);
 
+        }
+
+        [HttpGet("PaginatedSearch")]
+        public async Task<ResponsePagination<InvestmentDto>> PaginatedSearch([FromQuery] RequestPagination<InvesmentFilterDto> request)
+        {
+            return await _investmentService.PaginatedSearch(request);
         }
     }
 }
