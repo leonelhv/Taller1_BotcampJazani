@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jazani.Domain", "Jazani.Dom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jazani.Infrastructure", "Jazani.Infrastructure\Jazani.Infrastructure.csproj", "{51DF34C9-8DBC-48AD-92E3-C5EFF27EFEF3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jazani.Cores", "Jazani.Cores\Jazani.Cores.csproj", "{BF3D6907-D1A9-4869-AAEA-63DE37B3E875}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jazani.Core", "Jazani.Cores\Jazani.Core.csproj", "{BF3D6907-D1A9-4869-AAEA-63DE37B3E875}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jazani.UniTest", "Jazani.UniTest\Jazani.UniTest.csproj", "{329980BF-EBBB-4EF2-96D0-880876086F0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jazani.UniTest", "Jazani.UniTest\Jazani.UniTest.csproj", "{329980BF-EBBB-4EF2-96D0-880876086F0C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
