@@ -24,9 +24,9 @@ namespace Jazani.Infrastructure.Admins.Configurations
             builder.Property(t => t.NotificationCount).HasColumnName("notificationcount");
             builder.Property(t => t.IsInspector).HasColumnName("isinspector");
 
-
-
-
+            builder.HasOne(t => t.Role)
+                .WithMany(m => m.Users)
+                .HasForeignKey(t => t.RoleId);
         }
     }
 }

@@ -26,21 +26,22 @@ namespace Jazani.Application.Admins.Services.Implementations
             return _mapper.Map<UserOfficeRoleDto>(userOfficeRole);
         }
 
-        public async Task<UserOfficeRoleDto> DisabledAsync(int id)
+        public async Task<UserOfficeRoleDto> DisabledAsync(int userId, int officeId, int roleId)
         {
-            UserOfficeRole userOfficeRole = await _userOfficeRoleRepository.FindByIdAsync(id);
+            UserOfficeRole userOfficeRole = await _userOfficeRoleRepository.FindByIdAsync(userId, officeId, roleId);
             userOfficeRole.State = false;
-            UserOfficeRole userOfficeRoleSaved = await _userOfficeRoleRepository.SaveAsync(userOfficeRole);
+            UserOfficeRole userOfficeRoleSaved = await _userOfficeRoleRepository.DisabledAsync(userOfficeRole);
             return _mapper.Map<UserOfficeRoleDto>(userOfficeRoleSaved);
         }
 
 
-        public async Task<UserOfficeRoleDto> EditAsync(int id, UserOfficeRoleSaveDto userOfficeRoleSaveDto)
+        public async Task<UserOfficeRoleDto> EditAsync(int userId, int officeId, int roleId)
         {
-            UserOfficeRole userOfficeRole = await _userOfficeRoleRepository.FindByIdAsync(id);
-            _mapper.Map<UserOfficeRoleSaveDto, UserOfficeRole>(userOfficeRoleSaveDto, userOfficeRole);
-            await _userOfficeRoleRepository.SaveAsync(userOfficeRole);
-            return _mapper.Map<UserOfficeRoleDto>(userOfficeRole);
+            UserOfficeRole userOfficeRole = await _userOfficeRoleRepository.FindByIdAsync(userId, officeId, roleId);
+            userOfficeRole.State = true;
+            UserOfficeRole userOfficeRoleSaved = await _userOfficeRoleRepository.EditAsync(userOfficeRole);
+            return _mapper.Map<UserOfficeRoleDto>(userOfficeRoleSaved);
+
         }
 
         public async Task<IReadOnlyList<UserOfficeRoleDto>> FindAllAsync()
@@ -49,9 +50,9 @@ namespace Jazani.Application.Admins.Services.Implementations
             return _mapper.Map<IReadOnlyList<UserOfficeRoleDto>>(roles);
         }
 
-        public async Task<UserOfficeRoleDto?> FindByIdAsync(int id)
+        public async Task<UserOfficeRoleDto?> FindByIdAsync(int userId, int officeId, int roleId)
         {
-            UserOfficeRole role = await _userOfficeRoleRepository.FindByIdAsync(id);
+            UserOfficeRole role = await _userOfficeRoleRepository.FindByIdAsync(userId, officeId, roleId);
             return _mapper.Map<UserOfficeRoleDto?>(role);
         }
 

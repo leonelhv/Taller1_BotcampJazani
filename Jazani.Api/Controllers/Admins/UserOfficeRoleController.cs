@@ -25,33 +25,34 @@ namespace Jazani.Api.Controllers.Admins
             return await _userOfficeRoleService.FindAllAsync();
         }
 
-        // GET api/<PeriocityController>/5
-        [HttpGet("{id}")]
-        public async Task<UserOfficeRoleDto?> Get(int id)
+
+        [HttpGet("{userId}/{officeId}/{roleId}")]
+        public async Task<UserOfficeRoleDto?> Get(int userId, int officeId, int roleId)
         {
-            return await _userOfficeRoleService.FindByIdAsync(id);
+            return await _userOfficeRoleService.FindByIdAsync(userId, officeId, roleId);
         }
 
-        // POST api/<PeriocityController>
+
         [HttpPost]
         public async Task<UserOfficeRoleDto> Post([FromBody] UserOfficeRoleSaveDto userOfficeRoleSaveDto)
         {
             return await _userOfficeRoleService.CreateAsync(userOfficeRoleSaveDto);
         }
 
-        // PUT api/<PeriocityController>/5
-        [HttpPut("{id}")]
-        public async Task<UserOfficeRoleDto> Put(int id, [FromBody] UserOfficeRoleSaveDto userOfficeRoleSaveDto)
+        [HttpPut("{userId}/{officeId}/{roleId}")]
+        public async Task<UserOfficeRoleDto> Put(int userId, int officeId, int roleId)
         {
-            return await _userOfficeRoleService.EditAsync(id, userOfficeRoleSaveDto);
+            return await _userOfficeRoleService.EditAsync(userId, officeId, roleId);
         }
 
-        // DELETE api/<PeriocityController>/5
-        [HttpDelete("{id}")]
-        public async Task<UserOfficeRoleDto> Delete(int id)
+
+
+        [HttpDelete("{userId}/{officeId}/{roleId}")]
+        public async Task<UserOfficeRoleDto> Delete(int userId, int officeId, int roleId)
         {
-            return await _userOfficeRoleService.DisabledAsync(id);
+            return await _userOfficeRoleService.DisabledAsync(userId, officeId, roleId);
         }
+
 
     }
 }

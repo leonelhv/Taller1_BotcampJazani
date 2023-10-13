@@ -9,7 +9,9 @@
         public DateTime RegistrationDate { get; set; }
         public bool State { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual User User { get; set; } = default!;
+        public virtual Office Office { get; set; } = default!;
+        public virtual Role Role { get; set; } = default!;
 
     }
 }

@@ -2,7 +2,6 @@
 {
     public class UserOfficeRoleSaveDto
     {
-        public int UserId { get; set; }
         public int OfficeId { get; set; }
         public int RoleId { get; set; }
 
