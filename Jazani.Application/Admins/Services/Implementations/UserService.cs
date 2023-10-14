@@ -15,18 +15,18 @@ namespace Jazani.Application.Admins.Services.Implementations
             _userRepository = userRepository;
             _mapper = mapper;
         }
-        public async Task<IReadOnlyList<UserDto>> FindAllAsync()
+        public async Task<IReadOnlyList<UsersDto>> FindAllAsync()
         {
             IReadOnlyList<User> users = await _userRepository.FindAllAsync();
-            return _mapper.Map<IReadOnlyList<UserDto>>(users);
+            return _mapper.Map<IReadOnlyList<UsersDto>>(users);
         }
 
-        public async Task<UserDto?> FindByIdAsync(int id)
+        public async Task<UsersDto?> FindByIdAsync(int id)
         {
             User? user = await _userRepository.FindByIdAsync(id);
-            return _mapper.Map<UserDto?>(user);
+            return _mapper.Map<UsersDto?>(user);
         }
-        public async Task<UserDto> CreateAsync(UserSaveDto userSaveDto)
+        public async Task<UsersDto> CreateAsync(UsersSaveDto userSaveDto)
         {
             User user = _mapper.Map<User>(userSaveDto);
             user.RegistrationDate = DateTime.Now;
@@ -38,24 +38,24 @@ namespace Jazani.Application.Admins.Services.Implementations
 
             await _userRepository.SaveAsync(user);
 
-            return _mapper.Map<UserDto>(user);
+            return _mapper.Map<UsersDto>(user);
         }
 
 
 
-        public async Task<UserDto> EditAsync(int id, UserSaveDto userSaveDto)
+        public async Task<UsersDto> EditAsync(int id, UsersSaveDto userSaveDto)
         {
             User user = await _userRepository.FindByIdAsync(id);
 
-            _mapper.Map<UserSaveDto, User>(userSaveDto, user);
+            _mapper.Map<UsersSaveDto, User>(userSaveDto, user);
 
             user.Password = PasswordHasher.HashPassword(user.Password);
 
             await _userRepository.SaveAsync(user);
 
-            return _mapper.Map<UserDto>(user);
+            return _mapper.Map<UsersDto>(user);
         }
-        public async Task<UserDto> DisabledAsync(int id)
+        public async Task<UsersDto> DisabledAsync(int id)
         {
 
             User user = await _userRepository.FindByIdAsync(id);
@@ -63,7 +63,7 @@ namespace Jazani.Application.Admins.Services.Implementations
 
             User userSaved = await _userRepository.SaveAsync(user);
 
-            return _mapper.Map<UserDto>(userSaved);
+            return _mapper.Map<UsersDto>(userSaved);
         }
 
 

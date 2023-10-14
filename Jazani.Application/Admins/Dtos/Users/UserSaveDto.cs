@@ -2,7 +2,7 @@
 
 namespace Jazani.Application.Admins.Dtos.Users
 {
-    public class UserSaveDto
+    public class UsersSaveDto
     {
         [DefaultValue(null)]
         public int? RoleId { get; set; }

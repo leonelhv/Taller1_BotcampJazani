@@ -3,13 +3,13 @@ using Jazani.Domain.Admins.Models;
 
 namespace Jazani.Application.Admins.Dtos.Users.Profiles
 {
-    public class UserProfile : Profile
+    public class UsersProfile : Profile
     {
-        public UserProfile()
+        public UsersProfile()
         {
-            CreateMap<User, UserDto>();
+            CreateMap<User, UsersDto>();
             CreateMap<User, UserSimpleDto>();
-            CreateMap<User, UserSaveDto>().ReverseMap();
+            CreateMap<User, UsersSaveDto>().ReverseMap();
         }
     }
 }

@@ -20,35 +20,35 @@ namespace Jazani.Api.Controllers.Admins
 
         // GET: api/<UserController>
         [HttpGet]
-        public async Task<IReadOnlyList<UserDto>> Get()
+        public async Task<IReadOnlyList<UsersDto>> Get()
         {
             return await _userService.FindAllAsync();
         }
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public async Task<UserDto?> Get(int id)
+        public async Task<UsersDto?> Get(int id)
         {
             return await _userService.FindByIdAsync(id);
         }
 
         // POST api/<UserController>
         [HttpPost]
-        public async Task<UserDto> Post([FromBody] UserSaveDto userSaveDto)
+        public async Task<UsersDto> Post([FromBody] UsersSaveDto userSaveDto)
         {
             return await _userService.CreateAsync(userSaveDto);
         }
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
-        public async Task<UserDto> Put(int id, [FromBody] UserSaveDto officeSaveDto)
+        public async Task<UsersDto> Put(int id, [FromBody] UsersSaveDto officeSaveDto)
         {
             return await _userService.EditAsync(id, officeSaveDto);
         }
 
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
-        public async Task<UserDto> Delete(int id)
+        public async Task<UsersDto> Delete(int id)
         {
             return await _userService.DisabledAsync(id);
         }

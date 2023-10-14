@@ -2,7 +2,7 @@
 
 namespace Jazani.Application.Admins.Dtos.Users
 {
-    public class UserDto
+    public class UsersDto
     {
         public int Id { get; set; }
         public int? RoleId { get; set; }
