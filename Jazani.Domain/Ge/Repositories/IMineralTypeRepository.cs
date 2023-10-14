@@ -3,7 +3,9 @@ using Jazani.Domain.Ge.Models;
 
 namespace Jazani.Domain.Ge.Repositories
 {
-    public interface IPeriodTypeRepository : ICrudRepository<PeriodType, int>
+    public interface IMineralTypeRepository : ICrudRepository<MineralType, int>, IPaginatedRepository<MineralType>
     {
+
     }
 }
+

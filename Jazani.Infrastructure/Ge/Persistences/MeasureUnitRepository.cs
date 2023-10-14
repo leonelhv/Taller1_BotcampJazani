@@ -1,9 +1,9 @@
-﻿using Jazani.Infrastructure.Cores.Contexts;
+﻿using Jazani.Domain.Ge.Models;
+using Jazani.Domain.Ge.Repositories;
+using Jazani.Infrastructure.Cores.Contexts;
 using Jazani.Infrastructure.Cores.Persistenses;
-using Jazani.Taller.Domain.Ge.Models;
-using Jazani.Taller.Domain.Ge.Repositories;
 
-namespace Jazani.Taller.Infrastructure.Ge.Persistences
+namespace Jazani.Infrastructure.Ge.Persistences
 {
     public class MeasureUnitRepository : CrudRepository<MeasureUnit, int>, IMeasureUnitRepository
     {

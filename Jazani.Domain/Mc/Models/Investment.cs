@@ -1,5 +1,5 @@
-﻿using Jazani.Domain.Soc.Models;
-using Jazani.Taller.Domain.Ge.Models;
+﻿using Jazani.Domain.Ge.Models;
+using Jazani.Domain.Soc.Models;
 using Jazani.Taller.Domain.Mc.Models;
 
 namespace Jazani.Domain.Mc.Models;

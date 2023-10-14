@@ -1,6 +1,6 @@
 ﻿using Jazani.Domain.Mc.Models;
 
-namespace Jazani.Taller.Domain.Ge.Models
+namespace Jazani.Domain.Ge.Models
 {
     public class PeriodType
     {

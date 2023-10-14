@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Jazani.Taller.Domain.Ge.Models;
+using Jazani.Domain.Ge.Models;
 
 namespace Jazani.Taller.Aplication.Ge.Dtos.MeasureUnits.Profiles
 {

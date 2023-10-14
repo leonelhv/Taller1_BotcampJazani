@@ -1,9 +1,9 @@
-﻿using Jazani.Infrastructure.Cores.Converters;
-using Jazani.Taller.Domain.Ge.Models;
+﻿using Jazani.Domain.Ge.Models;
+using Jazani.Infrastructure.Cores.Converters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Jazani.Taller.Infrastructure.Ge.Configuration
+namespace Jazani.Infrastructure.Ge.Configuration
 {
     public class MeasureUnitConfiguration : IEntityTypeConfiguration<MeasureUnit>
     {

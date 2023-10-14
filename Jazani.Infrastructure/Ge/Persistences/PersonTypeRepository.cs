@@ -5,10 +5,11 @@ using Jazani.Infrastructure.Cores.Persistenses;
 
 namespace Jazani.Infrastructure.Ge.Persistences
 {
-    public class PeriodTypeRepository : CrudRepository<PeriodType, int>, IPeriodTypeRepository
+    public class PersonTypeRepository : CrudRepository<PersonType, int>, IPersonTypeRepository
     {
-        public PeriodTypeRepository(ApplicationDbContext dbContext) : base(dbContext)
+        public PersonTypeRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
     }
 }
+

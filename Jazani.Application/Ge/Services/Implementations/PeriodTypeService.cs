@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Jazani.Application.Cores.Contexts.Exceptions;
+using Jazani.Domain.Ge.Models;
+using Jazani.Domain.Ge.Repositories;
 using Jazani.Taller.Aplication.Ge.Dtos.PeriodTypes;
-using Jazani.Taller.Domain.Ge.Models;
-using Jazani.Taller.Domain.Ge.Repositories;
 using Microsoft.Extensions.Logging;
 
 namespace Jazani.Taller.Aplication.Ge.Services.Implementations
