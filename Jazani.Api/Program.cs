@@ -8,8 +8,10 @@ using Jazani.Core.Securities.Services;
 using Jazani.Core.Securities.Services.Implementations;
 using Jazani.Infrastructure.Cores.Contexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -46,10 +48,10 @@ builder.Services.AddControllers(options =>
    {
        options.Filters.Add(new ValidationFilter());
 
-       /*AuthorizationPolicy authorizationPolicy = new AuthorizationPolicyBuilder()
+       AuthorizationPolicy authorizationPolicy = new AuthorizationPolicyBuilder()
        .RequireAuthenticatedUser()
        .Build();
-       options.Filters.Add(new AuthorizeFilter());*/
+       options.Filters.Add(new AuthorizeFilter());
    }
 );
 
